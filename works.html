@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>制作実績 | Shoya Web Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <a class="logo" href="index.html">Shoya <span>| Web Portfolio</span></a>
+    <nav aria-label="メインナビゲーション">
+      <a href="index.html">Home</a>
+      <a href="learning.html">Learning</a>
+      <a class="active" href="works.html">Works</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+
+  <main class="page-main">
+    <section class="page-intro">
+      <p class="eyebrow">WORKS</p>
+      <h1>制作実績</h1>
+      <p>学習した技術を活かし、実際の業務を想定したWebアプリケーションを制作しました。</p>
+    </section>
+
+    <section class="section compact">
+      <article class="rehab-project">
+
+        <div class="rehab-gallery">
+          <figure class="rehab-main-image">
+            <img
+              src="images/denkaru-image-1.png"
+              alt="患者登録・患者一覧画面" class="rehab-zoomable" tabindex="0" role="button" aria-label="画像を拡大表示"
+            >
+            <figcaption>患者登録・患者一覧（React）</figcaption>
+          </figure>
+
+          <div class="rehab-sub-images">
+            <figure>
+              <img
+                src="images/denkaru-image-2.png"
+                alt="リハビリ介入記録画面" class="rehab-zoomable" tabindex="0" role="button" aria-label="画像を拡大表示"
+                loading="lazy"
+              >
+              <figcaption>リハビリ介入記録（React）</figcaption>
+            </figure>
+
+            <figure>
+              <img
+                src="images/denkaru-image-3.png"
+                alt="患者検索画面" class="rehab-zoomable" tabindex="0" role="button" aria-label="画像を拡大表示"
+                loading="lazy"
+              >
+              <figcaption>患者検索(React)</figcaption>
+            </figure>
+
+            <figure>
+              <img
+                src="images/denkaru-image-4.png"
+                alt="情報共有・掲示板画面" class="rehab-zoomable" tabindex="0" role="button" aria-label="画像を拡大表示"
+                loading="lazy"
+              >
+              <figcaption>情報共有・掲示板（PHP/MySQL）</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="rehab-description">
+          <p class="eyebrow">PERSONAL PROJECT</p>
+          <h2>リハビリテーション部門向けWebアプリ</h2>
+
+          <p>
+            リハビリテーション部門での情報管理や記録業務を想定した、
+            学習用のWebアプリケーションです。
+          </p>
+
+          <h3>主な機能</h3>
+          <ul>
+            <li>患者情報の登録・一覧表示・検索</li>
+            <li>患者ごとのリハビリ介入記録の入力・閲覧</li>
+            <li>PHPによるログイン機能</li>
+            <li>情報共有を想定した掲示板機能</li>
+          </ul>
+
+          <h3>使用技術</h3>
+          <div class="tags">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>React</span>
+            <span>PHP</span>
+            <span>MySQL</span>
+          </div>
+
+          <p class="note">
+            学習用の制作物です。オンラインデモは準備中です。
+            掲載画像は画面イメージです。
+          </p>
+
+          <div class="button-row">
+            <span class="button demo-disabled">デモ（準備中）</span>
+
+            <a
+              class="button"
+              href="https://github.com/pisuke-web/rehab-management-app"
+              target="_blank"
+              rel="noopener noreferrer"
+            >GitHubでコードを見る</a>
+          </div>
+        </div>
+
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© Shoya | Web Portfolio</p>
+  </footer>
+
+  <!-- 画像拡大表示 -->
+  <div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+    <button class="image-lightbox-close" type="button" aria-label="拡大表示を閉じる">×</button>
+    <img class="image-lightbox-content" id="imageLightboxContent" alt="">
+    <p class="image-lightbox-caption" id="imageLightboxCaption"></p>
+  </div>
+
+  <script>
+    (() => {
+      const lightbox = document.getElementById('imageLightbox');
+      const enlarged = document.getElementById('imageLightboxContent');
+      const caption = document.getElementById('imageLightboxCaption');
+      const closeButton = lightbox.querySelector('.image-lightbox-close');
+      let previousFocus = null;
+
+      function openImage(img) {
+        previousFocus = img;
+        enlarged.src = img.src;
+        enlarged.alt = img.alt || '';
+        const figure = img.closest('figure');
+        const figcaption = figure ? figure.querySelector('figcaption') : null;
+        caption.textContent = figcaption ? figcaption.textContent : (img.alt || '');
+        lightbox.classList.add('is-open');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('lightbox-open');
+        closeButton.focus();
+      }
+
+      function closeImage() {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('lightbox-open');
+        enlarged.removeAttribute('src');
+        if (previousFocus) previousFocus.focus();
+      }
+
+      document.querySelectorAll('.rehab-zoomable').forEach((img) => {
+        img.addEventListener('click', () => openImage(img));
+        img.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openImage(img);
+          }
+        });
+      });
+
+      closeButton.addEventListener('click', closeImage);
+      lightbox.addEventListener('click', (event) => {
+        if (event.target === lightbox) closeImage();
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && lightbox.classList.contains('is-open')) {
+          closeImage();
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
